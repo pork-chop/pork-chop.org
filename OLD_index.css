@@ -1,0 +1,109 @@
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+body {
+	font-family: Helvetica, Arial, sans-serif;
+	color: #1D1D1D;
+	font-size: 16px;
+	font-size: 1rem;
+	background: #fff;
+	line-height: 1.4;
+	margin: 0;
+	padding: 0;
+	background: #d3d3d3 url("/blog/wp-content/themes/travelify/images/background.png") left top;
+	background-repeat: repeat;
+	border-top: 6px solid #71251D;
+}
+.wrapper {
+	background: #F8F8F8;
+	-webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
+	width: 95%;
+	max-width: 1018px;
+	margin: 15px auto;
+	padding: 20px;
+}
+
+#logo img {
+	max-height: 130px;
+	margin: 32px 0;
+	display: block;
+}
+
+#nav {
+	background: #71251d;
+	border: 1px solid #5a170e;
+	color: #fff;
+	/*text-shadow: 0 1px 1px #E8E8E8;*/
+}
+	#nav ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+		#nav li {
+			display: inline-block;
+		}
+
+		#nav a {
+			color: #fff;
+			text-decoration: none;
+			padding: .5rem 1rem;
+		}
+		#nav a:hover {
+			background: #439f55;
+		}
+
+
+/*#content {
+	width: 900px;
+	margin: 10px auto;
+	padding: 0;
+	border: 1px solid #2d2928;
+}
+a:link	{
+	text-decoration:none;
+	border-bottom: 1px dotted #d6a546;
+	font-weight:bold;
+	color:#d6a546;
+}
+a:visited   {
+	text-decoration:none;
+	border-bottom: 1px dotted #d6a546;
+	font-weight:bold;
+	color:#d6a546;
+}
+a:hover     {
+	text-decoration:none;
+	border-bottom: 1px solid #d6a546;
+	font-weight:bold;
+	color:#d6a546;
+}
+#textlinks {
+	text-align:right;
+	padding: 1em 2em;
+	margin: 0;
+}
+#textlinks ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+#textlinks li {
+	display: inline;
+}
+#footer {
+	font-size: small;
+	padding: 0 2em;
+	margin: 0;
+	line-height:1em;
+	color: #2d2928;
+
+}
+*/

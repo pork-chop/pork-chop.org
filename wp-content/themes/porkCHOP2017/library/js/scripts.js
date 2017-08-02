@@ -104,6 +104,28 @@ function loadGravatars() {
 	}
 } // end function
 
+function mobileNav() {
+  // set the viewport using the function above
+  viewport = updateViewportDimensions();
+
+  // if the viewport is tablet or larger, we make the menu button work
+  if (viewport.width <= 768) {
+    menuBtn = jQuery('a.menuBtn');
+
+    menuBtn.on('click', function(e) {
+      e.preventDefault();
+
+      if (jQuery('.nav').is(':visible')) {
+        jQuery('.nav').slideUp();
+        jQuery(this).find('span').empty().append(' &#9660;');
+      } else {
+        jQuery('.nav').slideDown();
+        jQuery(this).find('span').empty().append(' &#9650;');
+      }
+    });
+  }
+}
+
 
 /*
  * Put all your regular jQuery in here.
@@ -114,7 +136,8 @@ jQuery(document).ready(function($) {
    * Let's fire off the gravatar function
    * You can remove this if you don't need it
   */
-  loadGravatars();
+  // loadGravatars();
 
+  mobileNav();
 
 }); /* end of as page load scripts */

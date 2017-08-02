@@ -38,9 +38,15 @@ HEADER STYLES
 /*********************
 NAVIGATION STYLES
 *********************/
+nav {
+	.mobile { display: none; }
+}
 
 .nav {
+	display: block;
 	border: 0;
+
+
 	ul {
 		background:$black;
 		margin-top:0;

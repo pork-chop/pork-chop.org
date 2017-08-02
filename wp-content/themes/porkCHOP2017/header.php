@@ -57,6 +57,7 @@
 				</div>
 	
 				<nav role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
+					<div class="mobile"><p>[ <a href="#" class="menuBtn">menu<span> &#9660;</span></a> ]</p></div>
 					<?php wp_nav_menu(array(
 					         'container' => false,                           // remove nav container
 					         'container_class' => 'menu cf',                 // class of container (should you choose to use it)

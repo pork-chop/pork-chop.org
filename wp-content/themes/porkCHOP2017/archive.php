@@ -27,18 +27,18 @@ Template Name: Archives
 									    if (has_post_thumbnail( $post->ID ) ):
 									        $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' );
 									?>
-								        <div class="featured-image"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><img src="<?php echo $image[0]; ?>"></a></div>
+								        <div class="featured-image" style="background-image: url(<?php echo $image[0]; ?>);"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><!-- <img src=""> -->&nbsp;</a></div>
 									<?php endif; ?>
-
-									<h2 class="h2 entry-title"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 
 								</header>
 
 								<section class="entry-content cf">
 
+									<h2 class="h2 entry-title"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+
 									<?php //the_post_thumbnail( 'full' ); ?>
 
-									<?php the_excerpt(); ?>
+									<?php // the_excerpt(); ?>
 
 								</section>
 

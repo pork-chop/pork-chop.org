@@ -39,18 +39,36 @@ public function widget( $args, $instance ) {
 
 	// This is where you run the code and display the output
 	$facebook = get_field('facebook_page', 'option');
-	$facebook = get_field('facebook_page', 'option');
-	$facebook = get_field('facebook_page', 'option');
-	$facebook = get_field('facebook_page', 'option');
-	$facebook = get_field('facebook_page', 'option');
-	$facebook = get_field('facebook_page', 'option');
-	$facebook = get_field('facebook_page', 'option');
-	$facebook = get_field('facebook_page', 'option');
-	$facebook = get_field('facebook_page', 'option');
-	$facebook = get_field('facebook_page', 'option');
+	$twitter = get_field('twitter', 'option');
+	$instagram = get_field('instagram', 'option');
+	$flickr = get_field('flickr', 'option');
+	$linkedin = get_field('linkedin', 'option');
+	$pinterest = get_field('pinterest', 'option');
+	$ravelry = get_field('ravelry', 'option');
+	$github = get_field('github', 'option');
+	$goodreads = get_field('goodreads', 'option');
+	$last_fm = get_field('last_fm', 'option');
+	$about_me = get_field('about_me', 'option');
+	$klout = get_field('klout', 'option');
+	$fohr_card = get_field('fohr_card', 'option'); ?>
 
+	<ul class="social_presence">
+		<li><a href="<?php echo $facebook ?>" target="_blank">Facebook</a></li>
+		<li><a href="<?php echo $twitter ?>" target="_blank">Twitter</a></li>
+		<li><a href="<?php echo $instagram ?>" target="_blank">Instagram</a></li>
+		<li><a href="<?php echo $flickr ?>" target="_blank">Flickr</a></li>
+		<li><a href="<?php echo $linkedin ?>" target="_blank">LinkedIn</a></li>
+		<li><a href="<?php echo $pinterest ?>" target="_blank">Pinterest</a></li>
+		<li><a href="<?php echo $ravelry ?>" target="_blank">Ravelry</a></li>
+		<li><a href="<?php echo $github ?>" target="_blank">Github</a></li>
+		<li><a href="<?php echo $goodreads ?>" target="_blank">Goodreads</a></li>
+		<li><a href="<?php echo $last_fm ?>" target="_blank">Last.FM</a></li>
+		<li><a href="<?php echo $about_me ?>" target="_blank">About.me</a></li>
+		<li><a href="<?php echo $klout ?>" target="_blank">Klout</a></li>
+		<li><a href="<?php echo $fohr_card ?>" target="_blank">Fohr</a></li>
+	</ul>
 
-	echo __( 'Hello, World!', 'webchannels_widget_domain' );
+	<?php // echo __( 'Hello, World!', 'webchannels_widget_domain' );
 	echo $args['after_widget'];
 }
 		

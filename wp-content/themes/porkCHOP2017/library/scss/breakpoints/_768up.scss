@@ -63,12 +63,14 @@ nav {
 			has the possibility of being a mobile device.
 			*/
 			&:hover, &:focus {
-				color: $white;
+				/*color: $white;*/
 				text-decoration: underline;
 			}
 		}
 
-		&:first-child {}
+		&:first-child {
+			a { padding-left: 0; }
+		}
 		&:last-child {}
 
 		/*

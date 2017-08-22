@@ -4,7 +4,7 @@
 
 				<div id="inner-content" class="wrap cf">
 
-					<main id="main" class="m-all t-2of3 d-5of7 cf" role="main" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">
+					<main id="main" class="m-all t-3of3 d-7of7 cf" role="main" itemscope itemprop="mainContentOfPage" itemtype="http://schema.org/Blog">
 
 						<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -24,6 +24,12 @@
 								*/
 								get_template_part( 'post-formats/format', get_post_format() );
 							?>
+
+							<?php comments_template(); ?>
+
+							<hr>
+							
+							<div class="navigation wp-prev-next"><p class="prev-link"><?php previous_post_link(); ?></p> <p class="next-link"><?php next_post_link(); ?></p></div>
 
 						<?php endwhile; ?>
 
@@ -45,7 +51,7 @@
 
 					</main>
 
-					<?php get_sidebar(); ?>
+					<?php // get_sidebar(); ?>
 
 				</div>
 

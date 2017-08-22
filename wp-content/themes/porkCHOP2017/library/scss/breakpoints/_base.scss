@@ -41,7 +41,24 @@ style a page via class
 	.search-no-results {}           /* no results search page */
 	.search-paged-1 {}              /* individual paged search (i.e. body.search-paged-3) */
 .error404 {}                      /* 404 page */
-.single {}                        /* single post page */
+.single {                        /* single post page */
+
+	main {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.entry-content {
+
+		> p:first-of-type:first-letter {
+			float: left;
+			font-family: $serif;
+			font-size: 5em;
+			line-height: 1;
+			padding: .5rem .5rem 0 0;
+		}
+	}
+}
 	.postid-1 {}                    /* individual post page by id (i.e. body.postid-73) */
 	.single-paged-1 {}              /* individual paged single (i.e. body.single-paged-3) */
 .attachment {}                    /* attatchment page */
@@ -111,7 +128,7 @@ H1, H2, H3, H4, H5 STYLES
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
 	text-rendering: optimizelegibility;
-	font-family: $lato;
+	font-family: $serif;
 	font-weight: 400;
 	/*
 	if you're going to use webfonts, be sure to check your weights
@@ -169,7 +186,7 @@ HEADER STYLES
 			display: block;
 		}
 
-		img { width: 100%; max-width: 300px; }
+		img { display: block; width: 100%; max-width: 300px; margin: 0 auto; }
 	}
 
 /*********************
@@ -185,7 +202,7 @@ and more scalable.
 */
 
 nav {
-	background-color: $white;
+	/*background-color: $white;*/
 	font-size: .875rem;
 	/*-webkit-box-shadow:inset 0 0 4px 1px rgba(0,0,0,.4);
 	box-shadow:inset 0 0 4px 1px rgba(0,0,0,.4);*/
@@ -194,18 +211,18 @@ nav {
 		padding: 0.75em 1.5em;
 
 		p {
-			color: $black;
+			color: $white;
 			text-align: right;
 			margin: 0;
 
 		}
 
 		a.menuBtn {
-			color: $black;
+			color: $white;
 			text-decoration: none;
 
 			&:hover {
-				color: rgba($black, .7);
+				color: rgba($white, .7);
 			}
 
 			span { font-size: .8em; }
@@ -223,14 +240,15 @@ nav {
 	margin: 0 auto;
 
 	li {
-		background-color: $white;
+		/*background-color: $white;*/
 		/*border-right: 1px solid $white;
 		-webkit-box-shadow:inset 0 0 4px 1px rgba(0,0,0,.4);
 		box-shadow:inset 0 0 4px 1px rgba(0,0,0,.4);*/
+		text-align: right;
 
 		a {
 			display: block;
-			color: $black;
+			color: $white;
 			text-decoration: none;
 			padding: 0.75rem 1.5rem;
 			transition: all ease 0.25s;
@@ -243,7 +261,7 @@ nav {
 			*/
 			&:hover, &:focus {
 				/*background-color: darken($link-color, 10%);*/
-				color: $link-hover;
+				color: lighten($link-hover, 30%);
 
 			}
 		}
@@ -571,7 +589,7 @@ PAGE NAVI STYLES
 
 .pagination,
 .wp-prev-next {
-	margin: 1.5em 0;
+	margin: 1.5rem 0;
 }
 	.pagination{
     text-align: center;
@@ -638,6 +656,13 @@ PAGE NAVI STYLES
 		}
 
 	} /* end .wp-prev-next */
+
+/* Glyph, by Harry Roberts */ 
+hr { padding: 0; margin: 1.5rem 0; border: none; border-top: 2px dotted $gray; color: #dbc300; text-align: center; 
+
+	&:after { content: "&"; display: inline-block; position: relative; top: -0.7em; font-family: $serif; font-style: oblique; font-size: 1.5em; padding: 0 0.25em; background: white; }
+
+} 
 
 /******************************************************************
 COMMENT STYLES

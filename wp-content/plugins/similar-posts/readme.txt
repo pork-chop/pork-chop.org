@@ -1,11 +1,11 @@
-=== Similar Posts - Powerful Related Posts Plugin for WordPress ===
+=== Similar Posts - Best Related Posts Plugin for WordPress ===
 Contributors: WebFactory
 Tags: related posts, similar posts, connected posts, related posts widget, linked posts
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 4.0
-Tested up to: 4.7
-Stable tag: 2.71
+Tested up to: 4.8
+Stable tag: 2.75
 
 Displays a list of related posts similar to the current one based on content, title and/or tags. Works with all themes and is very customizable!
 
@@ -22,8 +22,6 @@ Similar Posts displays a list of posts that are similar or related to the curren
 * post excluding by author, ID, category, tags and custom fields
 * output in posts, widgets and RSS
 * over 50 options available
-
-[Full list of options and instructions](http://rmarsh.com/plugins/post-options/).
 
 Originally developed by [Robert Marsh](http://rmarsh.com/).
 
@@ -68,9 +66,12 @@ Read the <a href="http://wordpress.org/support/plugin/similar-posts">support for
 
 == ChangeLog ==
 
+* 2.75 - 2017/07/27
+  * minor update
+
 * 2.71 - 2017/04/02
   * minor update
-  
+
 * 2.7 - 2016/09/13
   * WebFactory took over development
   * no longer requires any additional plugins

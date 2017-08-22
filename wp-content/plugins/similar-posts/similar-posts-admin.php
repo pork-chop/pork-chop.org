@@ -3,8 +3,8 @@
  * Similar Posts
  * (c) Web factory Ltd, 2008 - 2017
  */
- 
- 
+
+
 // Admin stuff for Similar Posts Plugin, Version 2.6.2.0
 
 function similar_posts_option_menu() {
@@ -36,10 +36,10 @@ add_action('plugins_loaded', 'juggle_similar_posts_menus');
 
 function similar_posts_options_page(){
 	echo '<div class="wrap"><h2>';
-	_e('Similar Posts ', 'similar_posts'); 
+	_e('Similar Posts ', 'similar_posts');
 	echo '</h2></div>';
-	
-	
+
+
 	$m = new admin_subpages();
 	$m->add_subpage('General', 'general', 'similar_posts_general_options_subpage');
 	$m->add_subpage('Output', 'output', 'similar_posts_output_options_subpage');
@@ -48,90 +48,90 @@ function similar_posts_options_page(){
 	$m->add_subpage('Misc', 'other', 'similar_posts_other_options_subpage');
 	$m->add_subpage('Manage the Index', 'index', 'similar_posts_index_options_subpage');
 	$m->display();
-	
+
 	//echo '<div class="wrap"><a target="_blank" href="http://rmarsh.com/plugins/post-options/">';
-	//_e('Detailed help &amp; instructions'); 
+	//_e('Detailed help &amp; instructions');
 	//echo '</a></div>';
-	
+
 	add_action('in_admin_footer', 'similar_posts_admin_footer');
 }
 
 function similar_posts_admin_footer() {
 	ppl_admin_footer(str_replace('-admin', '', __FILE__), "similar-posts");
-	
+
 }
 
 function similar_posts_general_options_subpage(){
 	global $wpdb, $wp_version;
 	$options = get_option('similar-posts');
 	if (isset($_POST['update_options'])) {
-		check_admin_referer('similar-posts-update-options'); 
+		check_admin_referer('similar-posts-update-options');
 		if (defined('POC_CACHE_4')) poc_cache_flush();
 		// Fill up the options with the values chosen...
 		$options = ppl_options_from_post($options, array('limit', 'skip', 'show_private', 'show_pages', 'show_attachments', 'status', 'age', 'omit_current_post', 'match_cat', 'match_tags', 'match_author'));
 		update_option('similar-posts', $options);
 		// Show a message to say we've done something
 		echo '<div class="updated settings-error notice"><p>' . __('<b>Settings saved.</b>', 'similar_posts') . '</p></div>';
-	} 
+	}
 	//now we drop into html to display the option page form
 	?>
 		<div class="wrap similarposts-tab-content">
-		
+
 		<form method="post" action="">
-		
+
 		<table class="optiontable form-table">
-			<?php 
-				ppl_display_limit($options['limit']); 
-				ppl_display_skip($options['skip']); 
-				ppl_display_show_private($options['show_private']); 
-				ppl_display_show_pages($options['show_pages']); 
-				ppl_display_show_attachments($options['show_attachments']); 
+			<?php
+				ppl_display_limit($options['limit']);
+				ppl_display_skip($options['skip']);
+				ppl_display_show_private($options['show_private']);
+				ppl_display_show_pages($options['show_pages']);
+				ppl_display_show_attachments($options['show_attachments']);
 				ppl_display_status($options['status']);
 				ppl_display_age($options['age']);
-				ppl_display_omit_current_post($options['omit_current_post']); 
-				ppl_display_match_cat($options['match_cat']); 
-				ppl_display_match_tags($options['match_tags']); 
-				ppl_display_match_author($options['match_author']); 
+				ppl_display_omit_current_post($options['omit_current_post']);
+				ppl_display_match_cat($options['match_cat']);
+				ppl_display_match_tags($options['match_tags']);
+				ppl_display_match_author($options['match_author']);
 			?>
 		</table>
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save Settings', 'similar_posts') ?>" /></div>
 		<?php if (function_exists('wp_nonce_field')) wp_nonce_field('similar-posts-update-options'); ?>
-		</form>  
+		</form>
 	</div>
-	<?php	
+	<?php
 }
 
 function similar_posts_output_options_subpage(){
 	global $wpdb, $wp_version;
 	$options = get_option('similar-posts');
 	if (isset($_POST['update_options'])) {
-		check_admin_referer('similar-posts-update-options'); 
+		check_admin_referer('similar-posts-update-options');
 		if (defined('POC_CACHE_4')) poc_cache_flush();
 		// Fill up the options with the values chosen...
 		$options = ppl_options_from_post($options, array('output_template', 'prefix', 'suffix', 'none_text', 'no_text', 'divider', 'sort', 'group_template'));
 		update_option('similar-posts', $options);
 		// Show a message to say we've done something
 		echo '<div class="updated settings-error notice"><p>' . __('<b>Settings saved.</b>', 'similar_posts') . '</p></div>';
-	} 
+	}
 	//now we drop into html to display the option page form
 	?>
 		<div class="wrap similarposts-tab-content">
-		
+
 		<form method="post" action="">
-		
+
 		<table class="optiontable form-table">
 			<tr>
 			<td style="padding-top: 0; vertical-align: top;">
 			<table>
-			<?php 
-				ppl_display_output_template($options['output_template']); 
-				ppl_display_prefix($options['prefix']); 
-				ppl_display_suffix($options['suffix']); 
-				ppl_display_none_text($options['none_text']); 
-				ppl_display_no_text($options['no_text']); 
-				ppl_display_divider($options['divider']); 
+			<?php
+				ppl_display_output_template($options['output_template']);
+				ppl_display_prefix($options['prefix']);
+				ppl_display_suffix($options['suffix']);
+				ppl_display_none_text($options['none_text']);
+				ppl_display_no_text($options['no_text']);
+				ppl_display_divider($options['divider']);
 				ppl_display_sort($options['sort']);
-				ppl_display_group_template($options['group_template']); 
+				ppl_display_group_template($options['group_template']);
 			?>
 			</table>
 			</td>
@@ -141,124 +141,124 @@ function similar_posts_output_options_subpage(){
 		</table>
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save Settings', 'similar_posts') ?>" /></div>
 		<?php if (function_exists('wp_nonce_field')) wp_nonce_field('similar-posts-update-options'); ?>
-		</form>  
+		</form>
 	</div>
-	<?php	
+	<?php
 }
 
 function similar_posts_filter_options_subpage(){
 	global $wpdb, $wp_version;
 	$options = get_option('similar-posts');
 	if (isset($_POST['update_options'])) {
-		check_admin_referer('similar-posts-update-options'); 
+		check_admin_referer('similar-posts-update-options');
 		if (defined('POC_CACHE_4')) poc_cache_flush();
 		// Fill up the options with the values chosen...
 		$options = ppl_options_from_post($options, array('excluded_posts', 'included_posts', 'excluded_authors', 'included_authors', 'excluded_cats', 'included_cats', 'tag_str', 'custom'));
 		update_option('similar-posts', $options);
 		// Show a message to say we've done something
 		echo '<div class="updated settings-error notice"><p>' . __('<b>Settings saved.</b>', 'similar_posts') . '</p></div>';
-	} 
+	}
 	//now we drop into html to display the option page form
 	?>
 		<div class="wrap similarposts-tab-content">
-		
+
 		<form method="post" action="">
-		
+
 		<table class="optiontable form-table">
-			<?php 
-				ppl_display_excluded_posts($options['excluded_posts']); 
-				ppl_display_included_posts($options['included_posts']); 
-				ppl_display_authors($options['excluded_authors'], $options['included_authors']); 
-				ppl_display_cats($options['excluded_cats'], $options['included_cats']); 
-				ppl_display_tag_str($options['tag_str']); 
-				ppl_display_custom($options['custom']); 
+			<?php
+				ppl_display_excluded_posts($options['excluded_posts']);
+				ppl_display_included_posts($options['included_posts']);
+				ppl_display_authors($options['excluded_authors'], $options['included_authors']);
+				ppl_display_cats($options['excluded_cats'], $options['included_cats']);
+				ppl_display_tag_str($options['tag_str']);
+				ppl_display_custom($options['custom']);
 			?>
 		</table>
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save Settings', 'similar_posts') ?>" /></div>
 		<?php if (function_exists('wp_nonce_field')) wp_nonce_field('similar-posts-update-options'); ?>
-		</form>  
+		</form>
 	</div>
-	<?php	
+	<?php
 }
 
 function similar_posts_placement_options_subpage(){
 	global $wpdb, $wp_version;
 	$options = get_option('similar-posts');
 	if (isset($_POST['update_options'])) {
-		check_admin_referer('similar-posts-update-options'); 
+		check_admin_referer('similar-posts-update-options');
 		if (defined('POC_CACHE_4')) poc_cache_flush();
 		// Fill up the options with the values chosen...
 		$options = ppl_options_from_post($options, array('content_filter', 'widget_parameters', 'widget_condition', 'feed_on', 'feed_priority', 'feed_parameters', 'append_on', 'append_priority', 'append_parameters', 'append_condition'));
 		update_option('similar-posts', $options);
 		// Show a message to say we've done something
 		echo '<div class="updated settings-error notice"><p>' . __('<b>Settings saved.</b>', 'similar_posts') . '</p></div>';
-	} 
+	}
 	//now we drop into html to display the option page form
 	?>
 		<div class="wrap similarposts-tab-content">
-		
+
 		<form method="post" action="">
-		
+
 		<table class="optiontable form-table">
-			<?php 
-				ppl_display_append($options); 
-				ppl_display_feed($options); 
-				ppl_display_widget($options); 
+			<?php
+				ppl_display_append($options);
+				ppl_display_feed($options);
+				ppl_display_widget($options);
 				ppl_display_content_filter($options['content_filter']);
 			?>
 		</table>
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save Settings', 'similar_posts') ?>" /></div>
 		<?php if (function_exists('wp_nonce_field')) wp_nonce_field('similar-posts-update-options'); ?>
-		</form>  
+		</form>
 	</div>
-	<?php	
+	<?php
 }
 
 function similar_posts_other_options_subpage(){
 	global $wpdb, $wp_version;
 	$options = get_option('similar-posts');
 	if (isset($_POST['update_options'])) {
-		check_admin_referer('similar-posts-update-options'); 
+		check_admin_referer('similar-posts-update-options');
 		if (defined('POC_CACHE_4')) poc_cache_flush();
 		// Fill up the options with the values chosen...
 		$options = ppl_options_from_post($options, array('stripcodes', 'feed_active', 'term_extraction', 'num_terms', 'weight_title', 'weight_content', 'weight_tags', 'hand_links'));
-		$wcontent = $options['weight_content'] + 0.0001; 
+		$wcontent = $options['weight_content'] + 0.0001;
 		$wtitle = $options['weight_title'] + 0.0001;
 		$wtags = $options['weight_tags'] + 0.0001;
 		$wcombined = $wcontent + $wtitle + $wtags;
-		$options['weight_content'] = $wcontent / $wcombined; 
-		$options['weight_title'] = $wtitle / $wcombined; 
-		$options['weight_tags'] = $wtags / $wcombined; 
+		$options['weight_content'] = $wcontent / $wcombined;
+		$options['weight_title'] = $wtitle / $wcombined;
+		$options['weight_tags'] = $wtags / $wcombined;
 		update_option('similar-posts', $options);
 		// Show a message to say we've done something
 		echo '<div class="updated settings-error notice"><p>' . __('<b>Settings saved.</b>', 'similar_posts') . '</p></div>';
-	} 
+	}
 	//now we drop into html to display the option page form
 	?>
 		<div class="wrap similarposts-tab-content">
-		
+
 		<form method="post" action="">
-		
+
 		<table class="optiontable form-table">
-			<?php 
-				ppl_display_weights($options); 
-				ppl_display_num_terms($options['num_terms']); 
-				ppl_display_term_extraction($options['term_extraction']); 
+			<?php
+				ppl_display_weights($options);
+				ppl_display_num_terms($options['num_terms']);
+				ppl_display_term_extraction($options['term_extraction']);
 				ppl_display_hand_links($options['hand_links']);
 				ppl_display_feed_active($options['feed_active']);
-				ppl_display_stripcodes($options['stripcodes']); 
+				ppl_display_stripcodes($options['stripcodes']);
 			?>
 		</table>
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save Settings', 'similar_posts') ?>" /></div>
 		<?php if (function_exists('wp_nonce_field')) wp_nonce_field('similar-posts-update-options'); ?>
-		</form>  
+		</form>
 	</div>
-	<?php	
+	<?php
 }
 
 function similar_posts_index_options_subpage(){
 	if (isset($_POST['reindex_all'])) {
-		check_admin_referer('similar-posts-manage-update-options'); 
+		check_admin_referer('similar-posts-manage-update-options');
 		if (defined('POC_CACHE_4')) poc_cache_flush();
 		$options = get_option('similar-posts');
 		$options['utf8'] = $_POST['utf8'];
@@ -282,17 +282,17 @@ function similar_posts_index_options_subpage(){
 		$options = get_option('similar-posts');
 	}
 	?>
-    <div class="wrap similarposts-tab-content"> 
-		<?php 
+    <div class="wrap similarposts-tab-content">
+		<?php
 		echo '<p>'.__('Similar Posts maintains a special index to help search for related posts. The index is created when the plugin is activated and then kept up-to-date  automatically when posts are added, edited, or deleted.', 'similar_posts').'</p>';
 		echo '<p>'.__('The options that affect the index can be set below.', 'similar_posts').'</p>';
 		echo '<p>'.__('If you are using a language other than english you may find that the plugin mangles some characters since PHP is normally blind to multibyte characters. You 	can force the plugin to interpret extended characters as UTF-8 at the expense of a little speed but this facility is only available if your installation of PHP supports the mbstring functions.', 'similar_posts').'</p>';
 		echo '<p>'.__('Languages like Chinese, Korean and Japanese pose a special difficulty for the full-text search algorithm. As an experiment I have introduced an option below to work around some of these issues. The text must be encoded as UTF-8. I would be very grateful for feedback from any users knowledgeable in these languages.', 'similar_posts').'</p>';
-		echo '<p>'.__('Some related word forms should really be counted together, e.g., "follow", "follows", and "following". By default, Similar Posts treats such differences strictly but has two other algorithms which are more relaxed: <em>stemming</em> and <em>fuzzy matching</em>. The stemming algorithm tries to reduce related forms to their root stem. Stemming algorithms are provided for english, german, spanish, french and italian but stemmers for other languages can be created: see the help for instructions. Fuzzy matching uses the "metaphone" algorithm to handle word variations. Note: both stemming and fuzzy matching slow down the indexing more than a little. It is worth experimenting with the three possibilities to see what improves the similarity of posts in your particular circumstances.', 'similar_posts').'</p>'; 
-		echo '<p>'.__('The indexing routine processes posts in batches of 100 by default. If you run into problems with limited memory you can opt to make the batches smaller.', 'similar_posts').'</p>'; 
-		echo '<p>'.__('Note: the process of indexing may take a little while. On my modest machine 500 posts take between 5 seconds and 20 seconds (with stemming and utf-8 support). Don\'t worry if the screen fails to update until finished.', 'similar_posts').'</p>'; 
+		echo '<p>'.__('Some related word forms should really be counted together, e.g., "follow", "follows", and "following". By default, Similar Posts treats such differences strictly but has two other algorithms which are more relaxed: <em>stemming</em> and <em>fuzzy matching</em>. The stemming algorithm tries to reduce related forms to their root stem. Stemming algorithms are provided for english, german, spanish, french and italian but stemmers for other languages can be created: see the help for instructions. Fuzzy matching uses the "metaphone" algorithm to handle word variations. Note: both stemming and fuzzy matching slow down the indexing more than a little. It is worth experimenting with the three possibilities to see what improves the similarity of posts in your particular circumstances.', 'similar_posts').'</p>';
+		echo '<p>'.__('The indexing routine processes posts in batches of 100 by default. If you run into problems with limited memory you can opt to make the batches smaller.', 'similar_posts').'</p>';
+		echo '<p>'.__('Note: the process of indexing may take a little while. On my modest machine 500 posts take between 5 seconds and 20 seconds (with stemming and utf-8 support). Don\'t worry if the screen fails to update until finished.', 'similar_posts').'</p>';
 		?>
-		<form method="post" action="">		
+		<form method="post" action="">
 		<table class="optiontable form-table">
 			<tr valign="top">
 				<th scope="row"><label for="utf8"><?php _e('Handle extended characters?', 'similar_posts') ?></label></th>
@@ -301,7 +301,7 @@ function similar_posts_index_options_subpage(){
 					<option <?php if($options['utf8'] == 'false') { echo 'selected="selected"'; } ?> value="false">No</option>
 					<option <?php if($options['utf8'] == 'true') { echo 'selected="selected"'; } ?> value="true">Yes</option>
 					</select>
-				</td> 
+				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label for="cjk"><?php _e('Treat as Chinese, Korean, or Japanese?', 'similar_posts') ?></label></th>
@@ -310,7 +310,7 @@ function similar_posts_index_options_subpage(){
 					<option <?php if($options['cjk'] == 'false') { echo 'selected="selected"'; } ?> value="false">No</option>
 					<option <?php if($options['cjk'] == 'true') { echo 'selected="selected"'; } ?> value="true">Yes</option>
 					</select>
-				</td> 
+				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label for="use_stemmer"><?php _e('Treat Related Word Variations:', 'similar_posts') ?></label></th>
@@ -320,7 +320,7 @@ function similar_posts_index_options_subpage(){
 					<option <?php if($options['use_stemmer'] == 'true') { echo 'selected="selected"'; } ?> value="true">By Stem</option>
 					<option <?php if($options['use_stemmer'] == 'fuzzy') { echo 'selected="selected"'; } ?> value="fuzzy">Fuzzily</option>
 					</select>
-				</td> 
+				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label for="batch"><?php _e('Batch size:', 'similar_posts') ?></label></th>
@@ -330,8 +330,8 @@ function similar_posts_index_options_subpage(){
 		<div class="submit">
 		<input type="submit" class="button button-primary" name="reindex_all" value="<?php _e('Recreate Index', 'similar_posts') ?>" />
 		<?php if (function_exists('wp_nonce_field')) wp_nonce_field('similar-posts-manage-update-options'); ?>
-		</div>   
-		</form>       
+		</div>
+		</form>
     </div>
 	<?php
 }
@@ -340,9 +340,9 @@ function similar_posts_index_options_subpage(){
 
 function similar_posts_for_feed_options_page(){
 	echo '<div class="wrap"><h2>';
-	_e('Similar Posts Feed ', 'similar_posts'); 
+	_e('Similar Posts Feed ', 'similar_posts');
 	echo '<a href="http://rmarsh.com/plugins/post-options/" style="font-size: 0.8em;">';
-	_e('help and instructions'); 
+	_e('help and instructions');
 	echo '</a></h2></div>';
 	$m = new admin_subpages();
 	$m->add_subpage('General', 'general', 'similar_posts_feed_general_options_subpage');
@@ -356,14 +356,14 @@ function similar_posts_feed_general_options_subpage(){
 	global $wpdb, $wp_version;
 	$options = get_option('similar-posts-feed');
 	if (isset($_POST['update_options'])) {
-		check_admin_referer('similar-posts-feed-update-options'); 
+		check_admin_referer('similar-posts-feed-update-options');
 		if (defined('POC_CACHE_4')) poc_cache_flush();
 		// Fill up the options with the values chosen...
 		$options = ppl_options_from_post($options, array('limit', 'skip', 'show_private', 'show_pages', 'show_attachments', 'status', 'age', 'omit_current_post', 'match_cat', 'match_tags', 'match_author'));
 		update_option('similar-posts-feed', $options);
 		// Show a message to say we've done something
 		echo '<div class="updated fade similarposts-settings-saved"><p>' . __('Settings saved', 'similar_posts') . '</p></div>';
-	} 
+	}
 	//now we drop into html to display the option page form
 	?>
 		<div class="wrap similarposts-tab-content">
@@ -371,39 +371,39 @@ function similar_posts_feed_general_options_subpage(){
 		<form method="post" action="">
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save General Settings', 'similar_posts') ?>" /></div>
 		<table class="optiontable form-table">
-			<?php 
-				ppl_display_limit($options['limit']); 
-				ppl_display_skip($options['skip']); 
-				ppl_display_show_private($options['show_private']); 
-				ppl_display_show_pages($options['show_pages']); 
-				ppl_display_show_attachments($options['show_attachments']); 
+			<?php
+				ppl_display_limit($options['limit']);
+				ppl_display_skip($options['skip']);
+				ppl_display_show_private($options['show_private']);
+				ppl_display_show_pages($options['show_pages']);
+				ppl_display_show_attachments($options['show_attachments']);
 				ppl_display_status($options['status']);
 				ppl_display_age($options['age']);
-				ppl_display_omit_current_post($options['omit_current_post']); 
-				ppl_display_match_cat($options['match_cat']); 
-				ppl_display_match_tags($options['match_tags']); 
-				ppl_display_match_author($options['match_author']); 
+				ppl_display_omit_current_post($options['omit_current_post']);
+				ppl_display_match_cat($options['match_cat']);
+				ppl_display_match_tags($options['match_tags']);
+				ppl_display_match_author($options['match_author']);
 			?>
 		</table>
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save General Settings', 'similar_posts') ?>" /></div>
 		<?php if (function_exists('wp_nonce_field')) wp_nonce_field('similar-posts-feed-update-options'); ?>
-		</form>  
+		</form>
 	</div>
-	<?php	
+	<?php
 }
 
 function similar_posts_feed_output_options_subpage(){
 	global $wpdb, $wp_version;
 	$options = get_option('similar-posts-feed');
 	if (isset($_POST['update_options'])) {
-		check_admin_referer('similar-posts-feed-update-options'); 
+		check_admin_referer('similar-posts-feed-update-options');
 		if (defined('POC_CACHE_4')) poc_cache_flush();
 		// Fill up the options with the values chosen...
 		$options = ppl_options_from_post($options, array('output_template', 'prefix', 'suffix', 'none_text', 'no_text', 'divider', 'sort', 'group_template'));
 		update_option('similar-posts-feed', $options);
 		// Show a message to say we've done something
 		echo '<div class="updated fade similarposts-settings-saved"><p>' . __('Settings saved', 'similar_posts') . '</p></div>';
-	} 
+	}
 	//now we drop into html to display the option page form
 	?>
 		<div class="wrap similarposts-tab-content">
@@ -414,15 +414,15 @@ function similar_posts_feed_output_options_subpage(){
 			<tr>
 			<td>
 			<table>
-			<?php 
-				ppl_display_output_template($options['output_template']); 
-				ppl_display_prefix($options['prefix']); 
-				ppl_display_suffix($options['suffix']); 
-				ppl_display_none_text($options['none_text']); 
-				ppl_display_no_text($options['no_text']); 
-				ppl_display_divider($options['divider']); 
+			<?php
+				ppl_display_output_template($options['output_template']);
+				ppl_display_prefix($options['prefix']);
+				ppl_display_suffix($options['suffix']);
+				ppl_display_none_text($options['none_text']);
+				ppl_display_no_text($options['no_text']);
+				ppl_display_divider($options['divider']);
 				ppl_display_sort($options['sort']);
-				ppl_display_group_template($options['group_template']); 
+				ppl_display_group_template($options['group_template']);
 			?>
 			</table>
 			</td>
@@ -432,23 +432,23 @@ function similar_posts_feed_output_options_subpage(){
 		</table>
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save Output Settings', 'similar_posts') ?>" /></div>
 		<?php if (function_exists('wp_nonce_field')) wp_nonce_field('similar-posts-feed-update-options'); ?>
-		</form>  
+		</form>
 	</div>
-	<?php	
+	<?php
 }
 
 function similar_posts_feed_filter_options_subpage(){
 	global $wpdb, $wp_version;
 	$options = get_option('similar-posts-feed');
 	if (isset($_POST['update_options'])) {
-		check_admin_referer('similar-posts-feed-update-options'); 
+		check_admin_referer('similar-posts-feed-update-options');
 		if (defined('POC_CACHE_4')) poc_cache_flush();
 		// Fill up the options with the values chosen...
 		$options = ppl_options_from_post($options, array('excluded_posts', 'included_posts', 'excluded_authors', 'included_authors', 'excluded_cats', 'included_cats', 'tag_str', 'custom'));
 		update_option('similar-posts-feed', $options);
 		// Show a message to say we've done something
 		echo '<div class="updated fade similarposts-settings-saved"><p>' . __('Settings saved', 'similar_posts') . '</p></div>';
-	} 
+	}
 	//now we drop into html to display the option page form
 	?>
 		<div class="wrap similarposts-tab-content">
@@ -456,41 +456,41 @@ function similar_posts_feed_filter_options_subpage(){
 		<form method="post" action="">
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save Filter Settings', 'similar_posts') ?>" /></div>
 		<table class="optiontable form-table">
-			<?php 
-				ppl_display_excluded_posts($options['excluded_posts']); 
-				ppl_display_included_posts($options['included_posts']); 
-				ppl_display_authors($options['excluded_authors'], $options['included_authors']); 
-				ppl_display_cats($options['excluded_cats'], $options['included_cats']); 
-				ppl_display_tag_str($options['tag_str']); 
-				ppl_display_custom($options['custom']); 
+			<?php
+				ppl_display_excluded_posts($options['excluded_posts']);
+				ppl_display_included_posts($options['included_posts']);
+				ppl_display_authors($options['excluded_authors'], $options['included_authors']);
+				ppl_display_cats($options['excluded_cats'], $options['included_cats']);
+				ppl_display_tag_str($options['tag_str']);
+				ppl_display_custom($options['custom']);
 			?>
 		</table>
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save Filter Settings', 'similar_posts') ?>" /></div>
 		<?php if (function_exists('wp_nonce_field')) wp_nonce_field('similar-posts-feed-update-options'); ?>
-		</form>  
+		</form>
 	</div>
-	<?php	
+	<?php
 }
 
 function similar_posts_feed_other_options_subpage(){
 	global $wpdb, $wp_version;
 	$options = get_option('similar-posts-feed');
 	if (isset($_POST['update_options'])) {
-		check_admin_referer('similar-posts-feed-update-options'); 
+		check_admin_referer('similar-posts-feed-update-options');
 		if (defined('POC_CACHE_4')) poc_cache_flush();
 		// Fill up the options with the values chosen...
 		$options = ppl_options_from_post($options, array('stripcodes', 'term_extraction', 'num_terms', 'weight_title', 'weight_content', 'weight_tags', 'hand_links'));
-		$wcontent = $options['weight_content'] + 0.0001; 
+		$wcontent = $options['weight_content'] + 0.0001;
 		$wtitle = $options['weight_title'] + 0.0001;
 		$wtags = $options['weight_tags'] + 0.0001;
 		$wcombined = $wcontent + $wtitle + $wtags;
-		$options['weight_content'] = $wcontent / $wcombined; 
-		$options['weight_title'] = $wtitle / $wcombined; 
-		$options['weight_tags'] = $wtags / $wcombined; 
+		$options['weight_content'] = $wcontent / $wcombined;
+		$options['weight_title'] = $wtitle / $wcombined;
+		$options['weight_tags'] = $wtags / $wcombined;
 		update_option('similar-posts-feed', $options);
 		// Show a message to say we've done something
 		echo '<div class="updated fade similarposts-settings-saved"><p>' . __('Settings saved', 'similar_posts') . '</p></div>';
-	} 
+	}
 	//now we drop into html to display the option page form
 	?>
 		<div class="wrap similarposts-tab-content">
@@ -498,19 +498,19 @@ function similar_posts_feed_other_options_subpage(){
 		<form method="post" action="">
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save Other Settings', 'similar_posts') ?>" /></div>
 		<table class="optiontable form-table">
-			<?php 
-				ppl_display_weights($options); 
-				ppl_display_num_terms($options['num_terms']); 
-				ppl_display_term_extraction($options['term_extraction']); 
+			<?php
+				ppl_display_weights($options);
+				ppl_display_num_terms($options['num_terms']);
+				ppl_display_term_extraction($options['term_extraction']);
 				ppl_display_hand_links($options['hand_links']);
-				ppl_display_stripcodes($options['stripcodes']); 
+				ppl_display_stripcodes($options['stripcodes']);
 			?>
 		</table>
 		<div class="submit"><input type="submit" class="button button-primary" name="update_options" value="<?php _e('Save Other Settings', 'similar_posts') ?>" /></div>
 		<?php if (function_exists('wp_nonce_field')) wp_nonce_field('similar-posts-feed-update-options'); ?>
-		</form>  
+		</form>
 	</div>
-	<?php	
+	<?php
 }
 
 
@@ -545,7 +545,7 @@ function save_index_entries ($utf8=false, $use_stemmer='false', $batch=100, $cjk
 // this function gets called when the plugin is installed to set up the index and default options
 function similar_posts_install() {
    	global $wpdb, $table_prefix;
-	
+
 	$table_name = $table_prefix . 'similar_posts';
 	$errorlevel = error_reporting(0);
 	$suppress = $wpdb->hide_errors();
@@ -612,12 +612,12 @@ function similar_posts_install() {
 	if (!isset($options['group_template'])) $options['group_template'] = '';
 	if (!isset($options['weight_content'])) $options['weight_content'] = 0.9;
 	if (!isset($options['weight_title'])) $options['weight_title'] = 0.1;
-	if (!isset($options['weight_tags'])) $options['weight_tags'] = 0.0;	
+	if (!isset($options['weight_tags'])) $options['weight_tags'] = 0.0;
 	if (!isset($options['num_terms'])) $options['num_terms'] = 20;
 	if (!isset($options['term_extraction'])) $options['term_extraction'] = 'frequency';
 	if (!isset($options['hand_links'])) $options['hand_links'] = 'false';
 	update_option('similar-posts-feed', $options);
-	
+
 	$options = (array) get_option('similar-posts');
 	// check each of the option values and, if empty, assign a default (doing it this long way
 	// lets us add new options in later versions)
@@ -669,7 +669,7 @@ function similar_posts_install() {
 	if (!isset($options['group_template'])) $options['group_template'] = '';
 	if (!isset($options['weight_content'])) $options['weight_content'] = 0.9;
 	if (!isset($options['weight_title'])) $options['weight_title'] = 0.1;
-	if (!isset($options['weight_tags'])) $options['weight_tags'] = 0.0;	
+	if (!isset($options['weight_tags'])) $options['weight_tags'] = 0.0;
 	if (!isset($options['num_terms'])) $options['num_terms'] = 20;
 	if (!isset($options['term_extraction'])) $options['term_extraction'] = 'frequency';
 	if (!isset($options['hand_links'])) $options['hand_links'] = 'false';
@@ -679,33 +679,33 @@ function similar_posts_install() {
 	if (!function_exists('mb_internal_encoding')) $options['cjk'] = 'false';
 	if (!isset($options['use_stemmer'])) $options['use_stemmer'] = 'false';
 	if (!isset($options['batch'])) $options['batch'] = '100';
-	
+
 	update_option('similar-posts', $options);
 
  	// initial creation of the index, if the table is empty
 	$num_index_posts = $wpdb->get_var("SELECT COUNT(*) FROM `$table_name`");
-	if ($num_index_posts == 0) save_index_entries (($options['utf8'] === 'true'), 'false', $options['batch'], ($options['cjk'] === 'true'));	
+	if ($num_index_posts == 0) save_index_entries (($options['utf8'] === 'true'), 'false', $options['batch'], ($options['cjk'] === 'true'));
 
 	// deactivate legacy Similar Posts Feed if present
 	$current = get_option('active_plugins');
 	if (in_array('Similar_Posts_Feed/similar-posts-feed.php', $current)) {
-		array_splice($current, array_search('Similar_Posts_Feed/similar-posts-feed.php', $current), 1); 
-		update_option('active_plugins', $current);	
+		array_splice($current, array_search('Similar_Posts_Feed/similar-posts-feed.php', $current), 1);
+		update_option('active_plugins', $current);
 	}
 	unset($current);
-	
+
  	// clear legacy custom fields
 	$wpdb->query("DELETE FROM $wpdb->postmeta WHERE meta_key = 'similarterms'");
-	
+
 	// clear legacy index
 	$indices = $wpdb->get_results("SHOW INDEX FROM $wpdb->posts", ARRAY_A);
 	foreach ($indices as $index) {
 		if ($index['Key_name'] === 'post_similar') {
 			$wpdb->query("ALTER TABLE $wpdb->posts DROP INDEX post_similar");
 			break;
-		}	
+		}
 	}
-	
+
 	$wpdb->show_errors($suppress);
 	error_reporting($errorlevel);
 }
@@ -713,7 +713,7 @@ function similar_posts_install() {
 
 
 if (!function_exists('ppl_plugin_basename')) {
-	if ( !defined('WP_PLUGIN_DIR') ) define( 'WP_PLUGIN_DIR', ABSPATH . 'wp-content/plugins' ); 
+	if ( !defined('WP_PLUGIN_DIR') ) define( 'WP_PLUGIN_DIR', ABSPATH . 'wp-content/plugins' );
 	function ppl_plugin_basename($file) {
 		$file = str_replace('\\','/',$file); // sanitize for Win32 installs
 		$file = preg_replace('|/+|','/', $file); // remove any duplicate slash

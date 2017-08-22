@@ -3,8 +3,8 @@
  * Similar Posts
  * (c) Web factory Ltd, 2008 - 2017
  */
- 
- 
+
+
 /*
 	A simple library class to ease the use of a further level of submenus in the admin pages
 	Uses no javascript but 'borrows' some CSS it shouldn't
@@ -30,17 +30,17 @@ class admin_subpages {
 		}
 		$this->parent_page = $parent_page;
 	}
-	
+
 	function add_subpage($title, $slug, $view) {
 		$this->pages[] = array('title' => $title, 'slug' => $slug, 'view' => $view);
 	}
-	
+
 	function add_subpages($pages) {
 		foreach ($pages as $page) {
 			$this->pages[] = array('title' => $page[0], 'slug' => $page[1], 'view' => $page[2]);
 		}
 	}
-	
+
 	function page_from_slug($slug) {
 		if (!isset($slug) || !$slug) {
 			return $this->pages[0];
@@ -54,12 +54,13 @@ class admin_subpages {
 	}
 
 	function display_menu() {
+    echo '<a title="Test your site\'s security with Security Ninja" id="ninja" href="https://wpsecurityninja.com/?utm_source=WP%20admin&utm_medium=banner&utm_campaign=Similar%20Posts&utm_content=ninja" target="_blank"><img title="Test your site\'s security with Security Ninja" alt="Test your site\'s security with Security Ninja" src="' . WP_PLUGIN_URL . '/similar-posts/images/ninja.png"></a>';
 		echo "\n<ul id=\"submenu\" class=\"similarposts-tabs-menu\" style=\"display: block\">\n";
 		// for compatibility with WP mu
 		$base = (isset($_SERVER['REDIRECT_URL'])) ? $_SERVER['REDIRECT_URL'] : $_SERVER['PHP_SELF'];
 		$base .= '?page=' . $this->parent_page . '&subpage=';
 		$this->current_page = (isset($_GET['subpage']))?$this->page_from_slug($_GET['subpage']):$this->page_from_slug(false);
-		foreach($this->pages as $page) {	
+		foreach($this->pages as $page) {
 			if($page === $this->current_page) {
 				echo "<li style=\"display: inline\"><a href=\"$base{$page['slug']}\" class=\"current\" style=\"display: inline\">{$page['title']}</a></li>\n";
 			} else {
@@ -68,7 +69,7 @@ class admin_subpages {
 		}
 		echo "</ul>\n";
 	}
-	
+
 	function display_view() {
 		$this->current_page['view']();
 	}
@@ -77,5 +78,5 @@ class admin_subpages {
 		$this->display_menu();
 		$this->display_view();
 	}
-	
+
 }

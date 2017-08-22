@@ -3,7 +3,7 @@
 Plugin Name: Similar Posts
 Plugin URI: https://wordpress.org/plugins/similar-posts/
 Description: Displays a highly configurable list of related posts. Similarity can be based on any combination of word usage in the content, title, or tags.
-Version: 2.71
+Version: 2.75
 Author: Web Factory Ltd
 Author URI: http://www.webfactoryltd.com/
 Text Domain: similar-posts
@@ -49,7 +49,7 @@ if ( ! defined( 'WP_PLUGIN_URL' ) )
 	define( 'WP_PLUGIN_URL', WP_CONTENT_URL. '/plugins' );
 if ( ! defined( 'WP_PLUGIN_DIR' ) )
 	define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
-	
+
 if (!defined('CF_LIBRARY')) require(WP_PLUGIN_DIR.'/similar-posts/common_functions.php');
 if (!defined('ACF_LIBRARY')) require(WP_PLUGIN_DIR.'/similar-posts/admin_common_functions.php');
 if (!defined('OT_LIBRARY')) require(WP_PLUGIN_DIR.'/similar-posts/output_tags.php');
@@ -62,14 +62,14 @@ $similar_posts_current_ID = -1;
 
 class SimilarPosts {
   static $version = 0;
-  
+
   static function get_plugin_version() {
     $plugin_data = get_file_data(__FILE__, array('version' => 'Version'), 'plugin');
     SimilarPosts::$version = $plugin_data['version'];
-     
+
     return $plugin_data['version'];
   } // get_plugin_version
-  
+
   // check if plugin's admin page is shown
   static function is_plugin_admin_page($page = 'settings') {
     $current_screen = get_current_screen();
@@ -80,7 +80,7 @@ class SimilarPosts {
 
     return false;
   } // is_plugin_admin_page
-  
+
   // add settings link to plugins page
   static function plugin_action_links($links) {
     $settings_link = '<a href="' . admin_url('options-general.php?page=similar-posts') . '" title="Settings for Similar Posts">Settings</a>';
@@ -90,11 +90,11 @@ class SimilarPosts {
     return $links;
   } // plugin_action_links
 
-	
+
 	static function execute($args='', $default_output_template='<li>{link}</li>', $option_key='similar-posts'){
 		global $table_prefix, $wpdb, $wp_version, $similar_posts_current_ID;
 		$start_time = ppl_microtime();
-		$postid = ppl_current_post_id($similar_posts_current_ID); 
+		$postid = ppl_current_post_id($similar_posts_current_ID);
 		if (defined('POC_CACHE_4')) {
 			$cache_key = $option_key.$postid.$args;
 			$result = poc_cache_fetch($cache_key);
@@ -127,16 +127,16 @@ class SimilarPosts {
 				list( $contentterms, $titleterms, $tagterms) = sp_terms_by_textrank($postid, $options['num_terms']);
 			} else {
 				list( $contentterms, $titleterms, $tagterms) = sp_terms_by_freq($postid, $options['num_terms']);
-			}	
+			}
 	 		// these should add up to 1.0
 			$weight_content = $options['weight_content'];
 			$weight_title = $options['weight_title'];
 			$weight_tags = $options['weight_tags'];
 			// below a threshold we ignore the weight completely and save some effort
 			if ($weight_content < 0.001) $weight_content = (int) 0;
-			if ($weight_title < 0.001) $weight_title = (int) 0; 
-			if ($weight_tags < 0.001) $weight_tags = (int) 0; 
-			
+			if ($weight_title < 0.001) $weight_title = (int) 0;
+			if ($weight_tags < 0.001) $weight_tags = (int) 0;
+
 			$count_content = substr_count($contentterms, ' ') + 1;
 			$count_title = substr_count($titleterms, ' ') + 1;
 			$count_tags  = substr_count($tagterms, ' ') + 1;
@@ -152,13 +152,13 @@ class SimilarPosts {
 			// the workhorse...
 			$sql = "SELECT *, ";
 			$sql .= score_fulltext_match($table_name, $weight_title, $titleterms, $weight_content, $contentterms, $weight_tags, $tagterms, $forced_ids);
-		    
+
 			if ($check_custom) $sql .= "LEFT JOIN $wpdb->postmeta ON post_id = ID ";
-			
+
 			// build the 'WHERE' clause
 			$where = array();
 			$where[] = where_fulltext_match($weight_title, $titleterms, $weight_content, $contentterms, $weight_tags, $tagterms);
-			if (!function_exists('get_post_type')) { 
+			if (!function_exists('get_post_type')) {
 				$where[] = where_hide_future();
 			} else {
 				$where[] = where_show_status($options['status'], $options['show_attachments']);
@@ -166,7 +166,7 @@ class SimilarPosts {
 			if ($match_category) $where[] = where_match_category();
 			if ($match_tags) $where[] = where_match_tags($options['match_tags']);
 			if ($match_author) $where[] = where_match_author();
-			$where[] = where_show_pages($options['show_pages'], $options['show_attachments']);	
+			$where[] = where_show_pages($options['show_pages'], $options['show_attachments']);
 			if ($include_cats) $where[] = where_included_cats($options['included_cats']);
 			if ($exclude_cats) $where[] = where_excluded_cats($options['excluded_cats']);
 			if ($exclude_authors) $where[] = where_excluded_authors($options['excluded_authors']);
@@ -179,7 +179,7 @@ class SimilarPosts {
 			if ($check_age) $where[] = where_check_age($options['age']['direction'], $options['age']['length'], $options['age']['duration']);
 			if ($check_custom) $where[] = where_check_custom($options['custom']['key'], $options['custom']['op'], $options['custom']['value']);
 			$sql .= "WHERE ".implode(' AND ', $where);
-			if ($check_custom) $sql .= " GROUP BY $wpdb->posts.ID";	
+			if ($check_custom) $sql .= " GROUP BY $wpdb->posts.ID";
 			$sql .= " ORDER BY score DESC LIMIT $limit";
 			//echo $sql;
 			$results = $wpdb->get_results($sql);
@@ -191,7 +191,7 @@ class SimilarPosts {
 			foreach ($results as $result) {
 				$items[] = ppl_expand_template($result, $options['output_template'], $translations, $option_key);
 			}
-			if ($options['sort']['by1'] !== '') $items = ppl_sort_items($options['sort'], $results, $option_key, $options['group_template'], $items);		
+			if ($options['sort']['by1'] !== '') $items = ppl_sort_items($options['sort'], $results, $option_key, $options['group_template'], $items);
 			$output = implode(($options['divider']) ? $options['divider'] : "\n", $items);
 			$output = $options['prefix'] . $output . $options['suffix'];
 		} else {
@@ -204,7 +204,7 @@ class SimilarPosts {
 				$output = $options['prefix'] . ppl_expand_template(array(), $options['none_text'], $translations, $option_key) . $options['suffix'];
 			}
 		}
-		if (defined('POC_CACHE_4')) poc_cache_store($cache_key, $output); 
+		if (defined('POC_CACHE_4')) poc_cache_store($cache_key, $output);
 		return ($output) ? $output . sprintf("<!-- Similar Posts took %.3f ms -->", 1000 * (ppl_microtime() - $start_time)) : '';
 	}
 
@@ -218,7 +218,7 @@ class SimilarPosts {
       update_option('similar_posts_meta', $options);
     }
   } // activate
-	
+
 } // similarposts class
 
 function sp_terms_by_freq($ID, $num_terms = 20) {
@@ -241,13 +241,13 @@ function sp_terms_by_freq($ID, $num_terms = 20) {
 		arsort($wordtable);
 		if ($num_terms < 1) $num_terms = 1;
 		$wordtable = array_slice($wordtable, 0, $num_terms);
-		
+
 		foreach ($wordtable as $word => $count) {
 			$terms .= ' ' . $word;
 		}
-		
+
 		$res[] = $terms;
-		$res[] = $results[0]['title'];	
+		$res[] = $results[0]['title'];
 		$res[] = $results[0]['tags'];
  	}
 	return $res;
@@ -272,14 +272,14 @@ function sp_terms_by_textrank($ID, $num_terms = 20) {
 			$prev_word = $word;
 			$word = strtok(' ');
 		}
- 		// initialise the list of PageRanks-- one for each unique word 
+ 		// initialise the list of PageRanks-- one for each unique word
 		reset($graph);
 		while (list($vertex, $in_edges) =  each($graph)) {
 			$oldrank[$vertex] = 0.25;
 		}
 		$n = count($graph);
 		if ($n > 0) {
-			$base = 0.15 / $n; 
+			$base = 0.15 / $n;
 			$error_margin = $n * 0.005;
 			do {
 				$error = 0.0;
@@ -292,7 +292,7 @@ function sp_terms_by_textrank($ID, $num_terms = 20) {
 						$r += ($weight * $oldrank[$edge]) / $out_edges[$edge];
 					}
 					$rank[$vertex] = $base + 0.95 * $r;
-					$error += abs($rank[$vertex] - $oldrank[$vertex]);		
+					$error += abs($rank[$vertex] - $oldrank[$vertex]);
 				}
 				$oldrank = $rank;
 				//echo $error . '<br>';
@@ -303,9 +303,9 @@ function sp_terms_by_textrank($ID, $num_terms = 20) {
 			foreach ($rank as $vertex => $score) {
 				$terms .= ' ' . $vertex;
 			}
-		}	
+		}
 		$res[] = $terms;
-		$res[] = $results[0]['title'];	
+		$res[] = $results[0]['title'];
 		$res[] = $results[0]['tags'];
  	}
 	return $res;
@@ -329,7 +329,7 @@ function sp_save_index_entry($postID) {
 	if (is_null($pid)) {
 		$wpdb->query("INSERT INTO $table_name (pID, content, title, tags) VALUES ($postID, \"$content\", \"$title\", \"$tags\")");
 	} else {
-		$wpdb->query("UPDATE $table_name SET content=\"$content\", title=\"$title\", tags=\"$tags\" WHERE pID=$postID" );	
+		$wpdb->query("UPDATE $table_name SET content=\"$content\", title=\"$title\", tags=\"$tags\" WHERE pID=$postID" );
 	}
 	return $postID;
 }
@@ -382,10 +382,10 @@ function sp_cjk_digrams($string) {
 				$result[] = $ascii;
 				$ascii = '';
 				$prev = $c;
-			} else {	
+			} else {
 				$result[] = sp_mb_str_pad($prev.$c, 4, '_');
 				$prev = $c;
-			}	
+			}
 		} else {
 			$ascii .= $c;
 		}
@@ -412,14 +412,14 @@ function sp_get_post_terms($text, $utf8, $use_stemmer, $cjk) {
 					$words .= sp_mb_str_pad(metaphone($word), 4, '_') . ' ';
 					break;
 				case 'false':
-				default:	
-					$words .= $word . ' ';		
-				} 
-			}	
-		}	
+				default:
+					$words .= $word . ' ';
+				}
+			}
+		}
 	} else {
 		$wordlist = str_word_count(sp_clean_words($text), 1);
-		$words = ''; 
+		$words = '';
 		reset($wordlist);
 		while (list($n, $word) =  each($wordlist)) {
 			if ( strlen($word) > 3 && !isset($overusedwords[$word])) {
@@ -431,13 +431,13 @@ function sp_get_post_terms($text, $utf8, $use_stemmer, $cjk) {
 					$words .= str_pad(metaphone($word), 4, '_') . ' ';
 					break;
 				case 'false':
-				default:	
-					$words .= $word . ' ';		
-				} 
-			}	
-		}	
+				default:
+					$words .= $word . ' ';
+				}
+			}
+		}
 	}
-	if ($cjk) $words = sp_cjk_digrams($words);	
+	if ($cjk) $words = sp_cjk_digrams($words);
 	return $words;
 }
 
@@ -460,11 +460,11 @@ function sp_get_title_terms($text, $utf8, $use_stemmer, $cjk) {
 					$words .= sp_mb_str_pad(metaphone($word), 4, '_') . ' ';
 					break;
 				case 'false':
-				default:	
+				default:
 					$words .= sp_mb_str_pad($word, 4, '_') . ' ';
-				} 
-			}	
-		}	
+				}
+			}
+		}
 	} else {
 		$wordlist = str_word_count(sp_clean_words($text), 1);
 		$words = '';
@@ -478,19 +478,19 @@ function sp_get_title_terms($text, $utf8, $use_stemmer, $cjk) {
 					$words .= str_pad(metaphone($word), 4, '_') . ' ';
 					break;
 				case 'false':
-				default:	
+				default:
 					$words .= str_pad($word, 4, '_') . ' ';
-				} 
+				}
 			}
 		}
 	}
-	if ($cjk) $words = sp_cjk_digrams($words);	
+	if ($cjk) $words = sp_cjk_digrams($words);
 	return $words;
 }
 
 function sp_get_tag_terms($ID, $utf8) {
 	global $wpdb;
-	if (!function_exists('get_object_term_cache')) return ''; 
+	if (!function_exists('get_object_term_cache')) return '';
 	$tags = array();
 	$query = "SELECT t.name FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy AS tt ON tt.term_id = t.term_id INNER JOIN $wpdb->term_relationships AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'post_tag' AND tr.object_id = '$ID'";
 	$tags = $wpdb->get_col($query);
@@ -499,18 +499,18 @@ function sp_get_tag_terms($ID, $utf8) {
 			mb_internal_encoding('UTF-8');
 			foreach ($tags as $tag) {
 				$newtags[] = sp_mb_str_pad(mb_strtolower(str_replace('"', "'", $tag)), 4, '_');
-			}	
+			}
 		} else {
 			foreach ($tags as $tag) {
 				$newtags[] = str_pad(strtolower(str_replace('"', "'", $tag)), 4, '_');
-			}	
-		}	
-		$newtags = str_replace(' ', '_', $newtags);	
+			}
+		}
+		$newtags = str_replace(' ', '_', $newtags);
 		$tags = implode (' ', $newtags);
 	} else {
 		$tags = '';
-	}	
-	return $tags;		
+	}
+	return $tags;
 }
 
 if ( is_admin() ) {
@@ -537,7 +537,7 @@ function widget_rrm_similar_posts_init() {
 			}
 		}
 		$condition = (stristr($condition, "return")) ? $condition : "return ".$condition;
-		$condition = rtrim($condition, '; ') . ' || is_admin();'; 
+		$condition = rtrim($condition, '; ') . ' || is_admin();';
 		if (eval($condition)) {
 			$title = empty($options['title']) ? __('Similar Posts', 'similar_posts') : $options['title'];
 			if ( !$number = (int) $options['number'] )
@@ -546,7 +546,7 @@ function widget_rrm_similar_posts_init() {
 				$number = 1;
 			else if ( $number > 15 )
 				$number = 15;
-			$options = get_option('recent-posts');	
+			$options = get_option('recent-posts');
 			$widget_parameters = $options['widget_parameters'];
 			$output = SimilarPosts::execute('limit='.$number.'&'.$widget_parameters);
 			if ($output) {
@@ -565,7 +565,7 @@ function widget_rrm_similar_posts_init() {
 			update_option("widget_rrm_similar_posts", $options);
 		} else {
 			$options = get_option('widget_rrm_similar_posts');
-		}		
+		}
 		$title = esc_attr($options['title']);
 		if ( !$number = (int) $options['number'] )
 			$number = 5;
@@ -593,7 +593,7 @@ add_action('plugins_loaded', 'widget_rrm_similar_posts_init');
 if(defined('WPLANG')){
 	$language = substr(WPLANG, 0, 2);
 } else {
-	$language = '';	
+	$language = '';
 }
 //if no language is specified make it the default which is 'en'
 if ($language == '') {
@@ -632,9 +632,9 @@ function similar_posts_wp_admin_style() {
 function similar_posts_init () {
 	global $overusedwords, $wp_db_version;
 	load_plugin_textdomain('similar_posts');
-  
+
   SimilarPosts::get_plugin_version();
-	
+
 	$options = get_option('similar-posts');
 	if ($options['feed_active'] === 'true') add_filter('the_content', 'similar_posts_for_feed');
 	if ($options['content_filter'] === 'true' && function_exists('ppl_register_content_filter')) ppl_register_content_filter('SimilarPosts');
@@ -645,18 +645,18 @@ function similar_posts_init () {
 		$condition = 'true';
 	}
 	$condition = (stristr($condition, "return")) ? $condition : "return ".$condition;
-	$condition = rtrim($condition, '; ') . ';'; 
+	$condition = rtrim($condition, '; ') . ';';
 	if ($options['append_on'] === 'true' && function_exists('ppl_register_post_filter')) ppl_register_post_filter('append', 'similar-posts', 'SimilarPosts', $condition);
 
 	//install the actions to keep the index up to date
 	add_action('save_post', 'sp_save_index_entry', 1);
 	add_action('delete_post', 'sp_delete_index_entry', 1);
-	if ($wp_db_version < 3308 ) { 
+	if ($wp_db_version < 3308 ) {
 		add_action('edit_post', 'sp_save_index_entry', 1);
 		add_action('publish_post', 'sp_save_index_entry', 1);
-	} 
+	}
 	add_action( 'admin_enqueue_scripts', 'similar_posts_wp_admin_style' );
-  
+
   // aditional links in plugin description
   add_filter('plugin_action_links_' . basename(dirname(__FILE__)) . '/' . basename(__FILE__),
              array('SimilarPosts', 'plugin_action_links'));

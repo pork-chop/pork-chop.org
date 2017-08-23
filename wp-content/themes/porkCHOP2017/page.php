@@ -50,9 +50,9 @@
 
 								</footer>
 
-								<?php comments_template(); ?>
-
 							</article>
+
+							<?php if ( comments_open() || get_comments_number() ) : comments_template(); endif; ?>
 
 							<?php endwhile; endif; ?>
 

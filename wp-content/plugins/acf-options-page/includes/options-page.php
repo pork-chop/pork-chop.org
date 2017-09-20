@@ -93,7 +93,7 @@ class acf_options_page {
 		
 		foreach( $migrate as $old => $new ) {
 			if( !empty($page[$old]) ) {
-				$page[ $new ] = acf_extract_var( $page, $old );
+				$page[ $new ] = $page[$old];
 			}
 		}
 		

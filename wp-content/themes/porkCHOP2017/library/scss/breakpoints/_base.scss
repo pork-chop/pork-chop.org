@@ -41,6 +41,29 @@ style a page via class
 	.search-no-results {}           /* no results search page */
 	.search-paged-1 {}              /* individual paged search (i.e. body.search-paged-3) */
 .error404 {}                      /* 404 page */
+
+
+@supports (initial-letter: 3 ) or (-webkit-initial-letter: 3 ) {
+.single {                        /* single post page */
+
+	.entry-content {
+
+/*		> p:first-of-type:first-letter {
+			float: left;
+			font-family: $serif;
+			font-size: 5em;
+			line-height: 1;
+			text-transform: capitalize;
+			padding: .5rem .5rem 0 0;
+
+			-webkit-initial-letter: 3;
+			initial-letter: 3;
+		}
+*/	}
+}
+}
+
+
 .single {                        /* single post page */
 
 	main {
@@ -57,6 +80,9 @@ style a page via class
 			line-height: 1;
 			text-transform: capitalize;
 			padding: .5rem .5rem 0 0;
+
+			-webkit-initial-letter: 3;
+			initial-letter: 3;
 		}
 	}
 }
